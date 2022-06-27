@@ -233,6 +233,7 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
+          path: /home/ubuntu
       - install_awscli
       - run:
           name: Run migrations

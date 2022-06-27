@@ -245,8 +245,9 @@ jobs:
       - run:
           name: Configure server
           command: |
+            cd util
             ls
-            docker-compose up -d util/
+            docker-compose up -d
       - destroy-environment  
 
   run-migrations:

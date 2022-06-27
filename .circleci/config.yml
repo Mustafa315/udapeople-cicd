@@ -245,6 +245,7 @@ jobs:
       - run:
           name: Configure server
           command: |
+            ls
             docker-compose up -d util/
       - destroy-environment  
 

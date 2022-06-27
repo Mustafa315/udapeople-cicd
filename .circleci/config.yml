@@ -264,7 +264,7 @@ jobs:
           command: |
             cd backend
             npm install
-            docker-compose exec server node --require ts-node/register ./node_modules/typeorm/cli.js migration:generate -n UserRefac
+            docker-compose.yml exec server node --require ts-node/register ./node_modules/typeorm/cli.js migration:generate -n UserRefac
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration status to kvdb.io

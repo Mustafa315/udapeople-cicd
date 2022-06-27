@@ -27,7 +27,15 @@ commands:
                     sudo apt update
                     sudo apt install software-properties-common
                     sudo add-apt-repository --yes --update ppa:ansible/ansible
-                    sudo apt install ansible                        
+                    sudo apt install ansible                
+  install_docker:
+      description: Install docker 
+      steps:
+        - run:
+            name: Install docker
+            command: | 
+                    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                    sudo chmod +x /usr/local/bin/docker-compose    
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -226,10 +234,21 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
-      - destroy-environment     
+      - destroy-environment
+
+  configure-backend:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - install_docker
+      - run:
+          name: Configure server
+          command: |
+            docker-compose up -d util/docker-compose.yml
+      - destroy-environment  
 
   run-migrations:
-    working_directory: /home/ubuntu/project3
     docker:
       - image: cimg/node:13.8.0
     steps:
@@ -238,7 +257,6 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            sleep 500
             cd backend
             npm install
             npm run migrations > migrations_dump.txt

@@ -28,16 +28,16 @@ commands:
                     sudo apt install software-properties-common
                     sudo add-apt-repository --yes --update ppa:ansible/ansible
                     sudo apt install ansible                
-  install_docker:
-      description: Install docker 
-      steps:
-        - run:
-            name: Install docker
-            command: |
-                    sudo apt update
-                    sudo apt install containerd docker.io
-                    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                    sudo chmod +x /usr/local/bin/docker-compose    
+  # install_docker:
+  #     description: Install docker 
+  #     steps:
+  #       - run:
+  #           name: Install docker
+  #           command: |
+  #                   sudo apt update
+  #                   sudo apt install containerd docker.io
+  #                   sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  #                   sudo chmod +x /usr/local/bin/docker-compose    
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -238,19 +238,19 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
 
-  configure-backend:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - install_docker
-      - run:
-          name: Configure server
-          command: |
-            cd util
-            ls
-            docker-compose up -d
-      - destroy-environment  
+  # configure-backend:
+  #   docker:
+  #     - image: cimg/base:stable
+  #   steps:
+  #     - checkout
+  #     - install_docker
+  #     - run:
+  #         name: Configure server
+  #         command: |
+  #           cd util
+  #           ls
+  #           docker-compose up -d
+  #     - destroy-environment  
 
   run-migrations:
     docker:
@@ -404,8 +404,8 @@ workflows:
               only: [main]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      - configure-backend:
-          requires: [build-backend] 
+      # - configure-backend:
+      #     requires: [build-backend] 
       - run-migrations:
           requires: [configure-infrastructure]
           

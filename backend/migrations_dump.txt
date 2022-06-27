@@ -1,0 +1,12 @@
+
+> glee2@1.0.0 premigrations
+> npm run build
+
+
+> glee2@1.0.0 build
+> tsc
+
+
+> glee2@1.0.0 migrations
+> ts-node -r dotenv/config node_modules/.bin/typeorm migration:run
+

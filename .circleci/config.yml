@@ -229,7 +229,7 @@ jobs:
       - destroy-environment     
 
   run-migrations:
-    working_directory: /home/ubuntu
+    working_directory: /home/ubuntu/project3
     docker:
       - image: cimg/node:13.8.0
     steps:

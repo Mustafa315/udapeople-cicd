@@ -9,7 +9,7 @@
     src: artifact.tar.gz
     dest: ~/backend-app
 
-- name: "Installing Noode Dependencies"
+- name: "Installing Node Dependencies"
   shell: |  
     cd ~/backend-app
     npm i
@@ -22,7 +22,7 @@
 
   register: execute_node
 
-- name: print message
+- name: "print message"
   debug:
     msg: "{{ execute_node.stdout_lines }}"
 

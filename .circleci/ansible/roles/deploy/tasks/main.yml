@@ -22,7 +22,7 @@
 
   register: execute_node
 
-- name: "print message"
+- name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
 
